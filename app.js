@@ -4,15 +4,13 @@ const express = require('express');
 const app = express();
 const postRouter = require('./routers/posts.js');
 const port = process.env.PORT || 3000;
+const postController = require('./controllers/posts.js');
 
 //configurazione asset statici per media
 app.use(express.static('./public'));
 
 //rotta index con metodo http
-app.get('/', (req, res) => {
-    const filePath = path.join(__dirname, './index.html');
-    res.sendFile(filePath);
-});
+app.get('/', postController.index);
 
 app.use('/posts', postRouter);
 

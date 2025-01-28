@@ -7,7 +7,7 @@ const postsController = require('../controllers/posts.js');
 
 //rotte siamo in /posts
 router.get('/', postsController.index);
-// router.get('/create', postsController.create);
+router.get('/create', postsController.create);
 router.get('/:slug', postsController.show);
 
 
