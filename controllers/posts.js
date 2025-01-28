@@ -6,40 +6,45 @@ const posts = require("../db/posts.json");
 //funzioni da destruct
 
 const index = (req, res) => {
-    res.send('<h1>Benvenuto in Eliblog</h1>')
-}
-const lista = (req, res) => {
     //content negotiation
     res.format({
         html: () => {
-            // Inizializza la stringa HTML
             let html = `
-                    <div>
-                    <h2>Postsssssss</h2>
-                        <ul>
-                `;
-            // Ciclo per ogni post
-            posts.forEach(({ title, content, image, tags }) => {
-                html += `
-                        <li>
-                            <h2>${title}</h2>
-                            <p>${content}</p>
-                            <img width="100" src="/${image}" alt="${title} photo">
-                            <ul>
-                            <li>${tags.map(t => `<span class="tag">${t.toLowerCase().replaceAll(' ', '-')}</span>`).join(' ')}</li>
-                            </ul>
-                        </li>
-                    `;
-            });
-
-            // Chiudi la lista e il contenitore principale
-            html += `
-                        </ul>
+            <h2>leggi i posts</h2>
+            <ul>
+            `
+            posts.forEach(p => {
+                html +=`
+                <li>
+                <div>
+                    <h2>${p.title}</h2>
+                    <img width="200" src="/${p.image}" alt="img-${p.title}">
+                    <ul>
+                    ${p.tags.map(t => `<li>${t}</li>`).join(' ')}
                     </div>
-                `;
-
-            // Invia la risposta HTML
+                </li>`
+                })
+                html += `
+            </ul>
+            `
             res.send(html);
+        },
+        json: () => {
+            res.json({
+                data: posts,
+                count: posts.count
+            })
+        }
+    })
+};
+
+const show = (req, res) => {
+    const slugPostRichiesta = req.params.slug;
+    const postRichiesto = posts.find(post => post.slug === slugPostRichiesta);
+    //content negotiation
+    res.format({
+        html: () => {
+        
         },
         json: () => {
             res.json({
@@ -50,6 +55,9 @@ const lista = (req, res) => {
     });
 }
 
+const create = (req, res) => {
+};
+
 module.exports = {
-    index, lista
+    index, show, create
 }
