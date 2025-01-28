@@ -4,17 +4,15 @@ const app = express();
 const port = 3000;
 
 //importo modulo funzione lista da controller
-const { lista } = require('./controllers/posts.js');
-const { index } = require('./controllers/index.js');
-
+const postController = require('./controllers/posts.js');
 //configurazione asset statici per media
 app.use(express.static('public'));
 
 //rotta index con metodo http
-app.get('/', index);
+app.get('/', postController.index);
 
 //rotta posts
-app.get('/posts', lista);
+app.get('/posts', postController.lista);
 
 
 //istanziamento server su porta 
