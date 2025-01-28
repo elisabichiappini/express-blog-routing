@@ -46,18 +46,36 @@ const show = (req, res) => {
     //content negotiation
     res.format({
         html: () => {
-        
+            if(postRichiesto) {
+                const p = postRichiesto;
+                let html = `
+                    <div class="card">
+                        <h3>${p.title}</h3>
+                        <img src="/${p.image}" alt="img-${p.title}">
+                    </div>
+                `
+                res.send(html);
+            } else {
+                res.status(404).send(`<p>Pizza non trovata</p>`);
+            }
         },
         json: () => {
+            if(pizzaRichiesta) {
             res.json({
-                data: posts,
-                count: posts.length
+                ...postRichiesto,
+                image_url: `http://${req.headers.host}/${postRichiesto.image}`
+            });
+        }else{
+            res.status(404).json({
+                error: 'NOT FOUND',
+                description: `NON ESSITE UNA PIZZA CON LO SLUG ${slugPostRichiesta}`
             })
-        }
+        }}
     });
 }
 
 const create = (req, res) => {
+
 };
 
 module.exports = {
