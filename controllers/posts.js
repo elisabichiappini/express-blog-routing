@@ -10,6 +10,7 @@ const index = (req, res) => {
     res.format({
         html: () => {
             let html = `
+            <div style="font-family:sans-serif"> 
             <h2>leggi i posts</h2>
             <ul>
             `
@@ -26,6 +27,7 @@ const index = (req, res) => {
                 })
                 html += `
             </ul>
+            </div>
             `
             res.send(html);
         },
