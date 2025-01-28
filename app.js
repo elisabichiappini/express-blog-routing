@@ -1,9 +1,9 @@
 //modulo express
-const path = require('path');
 const express = require('express');
 const app = express();
-const postRouter = require('./routers/posts.js');
 const port = process.env.PORT || 3000;
+//modulo router post e controller post
+const postRouter = require('./routers/posts.js');
 const postController = require('./controllers/posts.js');
 
 //configurazione asset statici per media
@@ -12,6 +12,7 @@ app.use(express.static('./public'));
 //rotta index con metodo http
 app.get('/', postController.index);
 
+//registrazione router dentro app.js con prefisso /posts
 app.use('/posts', postRouter);
 
 //istanziamento server su porta 

@@ -15,7 +15,7 @@ const index = (req, res) => {
             <ul>
             `
             posts.forEach(p => {
-                html +=`
+                html += `
                 <li>
                 <div>
                     <h2>${p.title}</h2>
@@ -24,8 +24,8 @@ const index = (req, res) => {
                     ${p.tags.map(t => `<li>${t}</li>`).join(' ')}
                     </div>
                 </li>`
-                })
-                html += `
+            })
+            html += `
             </ul>
             </div>
             `
@@ -41,44 +41,40 @@ const index = (req, res) => {
 };
 
 const show = (req, res) => {
-    const slugPostRichiesta = req.params.slug;
-    const postRichiesto = posts.find(post => post.slug === slugPostRichiesta);
-    //content negotiation
-    res.format({
-        html: () => {
-            if(postRichiesto) {
-                const p = postRichiesto;
-                let html = `
-                    <div class="card">
-                        <h3>${p.title}</h3>
-                        <img src="/${p.image}" alt="img-${p.title}">
-                    </div>
-                `
-                res.send(html);
-            } else {
-                res.status(404).send(`<p>Pizza non trovata</p>`);
-            }
-        },
-        json: () => {
-            if(pizzaRichiesta) {
-            res.json({
-                ...postRichiesto,
-                image_url: `http://${req.headers.host}/${postRichiesto.image}`
-            });
-        }else{
-            res.status(404).json({
-                error: 'NOT FOUND',
-                description: `NON ESSITE UNA PIZZA CON LO SLUG ${slugPostRichiesta}`
-            })
-        }}
-    });
-}
+    const post = posts.find((p) => p.slug === req.params.slug);
+    if (post) {
+      const imageUrl = `http://localhost:3000/${post.image}`;
+      res.type("json").json({ ...post, image_url: imageUrl });
+    } else {
+      res.status(404).send({ error: "Post not found" });
+    }
+  };
+  
 
 const create = (req, res) => {
-    const filePath = path.join(__dirname, '../index.html');
-    res.sendFile(filePath);
+    res.format({
+        html: () => {
+            res.send('<h2>Creazione nuovo post</h2>');
+        },
+        default: () => {
+            res.status(406).send('not acceptable');
+        }
+    })
 };
 
+const download = (req, res) => {
+    const post = posts.find((p) => p.slug === req.params.slug);
+    if (post) {
+        const filePath = path.join(__dirname, `/${post.image}`);
+        res.download(filePath);
+    } else {
+        res.status(404).json({ error: "Post not found" });
+    }
+}
+
 module.exports = {
-    index, show, create
+    index,
+    show,
+    create,
+    download
 }
