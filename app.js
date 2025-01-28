@@ -1,19 +1,19 @@
 //modulo express
+const path = require('path');
 const express = require('express');
 const app = express();
-const port = 3000;
+const postRouter = require('./routers/posts.js');
 
-//importo modulo funzione lista da controller
-const postController = require('./controllers/posts.js');
 //configurazione asset statici per media
-app.use(express.static('public'));
+app.use(express.static('./public'));
 
 //rotta index con metodo http
-app.get('/', postController.index);
+app.get('/', (req, res) => {
+    const filePath = path.joing(__dirname, './index.html');
+    res.sendFile(filePath);
+});
 
-//rotta posts
-app.get('/posts', postController.lista);
-
+app.use('/posts', postRouter);
 
 //istanziamento server su porta 
 app.listen(port, () => {
