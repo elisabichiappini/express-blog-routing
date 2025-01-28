@@ -1,49 +1,26 @@
-const posts = [
-    {
-        title: 'hot',
-        content: 'sono felice così',
-        image: '01.png',
-        tags: ['#life', '#style', '#young']
-    },
-    {
-        title: 'snow',
-        content: 'guarda come nevica',
-        image: '02.png',
-        tags: ['#snow', '#game', '#young']
-    },
-    {
-        title: 'sunny',
-        content: 'mente sane corpore sane',
-        image: '03.png',
-        tags: ['#yoga', '#young']
-    },
-    {
-        title: 'festival',
-        content: 'sono felice così',
-        image: '04.png',
-        tags: ['#musica', '#hardcore', '#young time']
-    },
-    // {
-    //     title: 'hot',
-    //     content: 'sono felice così',
-    //     image: 'hot.jpg',
-    //     tags: ['#life', '#style', '#young']
-    // },
-];
+//importo modulo path, file system, file pizze, funzioni utili
+const path = require("path");
+const fs = require("fs");
+const posts = require("../db/posts.json");
 
-module.exports = {
-    lista: (req, res) => {
-        //content negotiation
-        res.format({
-            html: () => {
-                // Inizializza la stringa HTML
-                let html = `
+//funzioni da destruct
+
+const index = (req, res) => {
+    res.send('<h1>Benvenuto in Eliblog</h1>')
+}
+const lista = (req, res) => {
+    //content negotiation
+    res.format({
+        html: () => {
+            // Inizializza la stringa HTML
+            let html = `
                     <div>
+                    <h2>Postsssssss</h2>
                         <ul>
                 `;
-                // Ciclo per ogni post
-                posts.forEach(({ title, content, image, tags }) => {
-                    html += `
+            // Ciclo per ogni post
+            posts.forEach(({ title, content, image, tags }) => {
+                html += `
                         <li>
                             <h2>${title}</h2>
                             <p>${content}</p>
@@ -53,23 +30,26 @@ module.exports = {
                             </ul>
                         </li>
                     `;
-                });
+            });
 
-                // Chiudi la lista e il contenitore principale
-                html += `
+            // Chiudi la lista e il contenitore principale
+            html += `
                         </ul>
                     </div>
                 `;
 
-                // Invia la risposta HTML
-                res.send(html);
-            },
-            json: () => {
-                res.json({
-                    data: posts,
-                    count: posts.length
-                })
-            }
-        });
-    },
-};
+            // Invia la risposta HTML
+            res.send(html);
+        },
+        json: () => {
+            res.json({
+                data: posts,
+                count: posts.length
+            })
+        }
+    });
+}
+
+module.exports = {
+    index, lista
+}
