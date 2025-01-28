@@ -1,6 +1,5 @@
 //importo modulo path, file system, file pizze, funzioni utili
 const path = require("path");
-const fs = require("fs");
 const posts = require("../db/posts.json");
 
 //funzioni da destruct
@@ -43,7 +42,7 @@ const index = (req, res) => {
 const show = (req, res) => {
     const post = posts.find((p) => p.slug === req.params.slug);
     if (post) {
-      const imageUrl = `http://localhost:3000/${post.image}`;
+      const imageUrl = `http://localhost:3000/posts/${post.image}`;
       res.type("json").json({ ...post, image_url: imageUrl });
     } else {
       res.status(404).send({ error: "Post not found" });

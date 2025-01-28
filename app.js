@@ -7,10 +7,13 @@ const postRouter = require('./routers/posts.js');
 const postController = require('./controllers/posts.js');
 
 //configurazione asset statici per media
-app.use(express.static('./public'));
+app.use(express.static('public'));
 
 //rotta index con metodo http
-app.get('/', postController.index);
+app.get('/', (req, res) => {
+    res.send('<h1 style="text-align:center;font-family:sans-serif;color:red;">Eliblog</h1>')
+}
+);
 
 //registrazione router dentro app.js con prefisso /posts
 app.use('/posts', postRouter);

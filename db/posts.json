@@ -3,7 +3,7 @@
         "title": "hot",
         "slug":"hot",
         "content": "sono felice così",
-        "image": "01.png",
+        "image": "hot.jpg",
         "tags": [
             "#life",
             "#style",
@@ -14,7 +14,7 @@
         "title": "snow",
         "slug":"snow",
         "content": "guarda come nevica",
-        "image": "02.png",
+        "image": "snow.jpg",
         "tags": [
             "#snow",
             "#game",
@@ -23,9 +23,9 @@
     },
     {
         "title": "sunny",
-        "slug":"sunnt",
+        "slug":"sunny",
         "content": "mente sane corpore sane",
-        "image": "03.png",
+        "image": "sunny.jpg",
         "tags": [
             "#yoga",
             "#young"
@@ -35,7 +35,7 @@
         "title": "festival",
         "slug":"festival",
         "content": "sono felice così",
-        "image": "04.png",
+        "image": "festival.jpg",
         "tags": [
             "#musica",
             "#hardcore",
